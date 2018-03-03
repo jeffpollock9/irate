@@ -8,7 +8,7 @@
 namespace irate
 {
 
-template <typename Container, typename IndexType>
+template <typename Container, typename Index>
 struct enumerate_iterator
 {
     static constexpr bool is_const = std::is_const_v<Container>;
@@ -19,7 +19,7 @@ struct enumerate_iterator
                                     typename Container::iterator>;
 
     using value_type = typename std::iterator_traits<iterator_type>::value_type;
-    using index_type = IndexType;
+    using index_type = Index;
 
     using enumeration_value_type =
         std::conditional_t<is_const, const value_type&, value_type&>;
@@ -27,8 +27,8 @@ struct enumerate_iterator
     using enumeration_type =
         std::pair<const index_type, enumeration_value_type>;
 
-    explicit enumerate_iterator(const iterator_type iterator)
-        : iterator_(iterator){};
+    enumerate_iterator(const iterator_type iterator, const index_type index)
+        : iterator_(iterator), index_(index){};
 
     enumeration_type operator*()
     {
@@ -48,16 +48,16 @@ struct enumerate_iterator
 
 private:
     iterator_type iterator_;
-    index_type index_ = 0;
+    index_type index_;
 };
 
-template <typename Container, typename IndexType = int>
+template <typename Container, typename Index = int>
 struct enumerate
 {
-    using iterator_type = enumerate_iterator<Container, IndexType>;
+    using iterator_type = enumerate_iterator<Container, Index>;
 
-    explicit enumerate(Container& container)
-        : begin_(std::begin(container)), end_(std::end(container))
+    explicit enumerate(Container& container, const Index start = 0)
+        : begin_(std::begin(container), start), end_(std::end(container), -1)
     {}
 
     iterator_type begin() const

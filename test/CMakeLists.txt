@@ -1,4 +1,4 @@
-set(IRATE_TESTS enumerate)
+set(IRATE_TESTS enumerate zip)
 
 foreach(test ${IRATE_TESTS})
     add_executable(${test} ${test}.cpp)

@@ -45,7 +45,8 @@ struct zip_iterator
 
     using zip_type = std::tuple<typename Containers::value_type...>;
 
-    zip_iterator(const typename Containers::const_iterator... iterators)
+    explicit zip_iterator(
+        const typename Containers::const_iterator... iterators)
         : iterators_(iterators...)
     {}
 

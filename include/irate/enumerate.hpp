@@ -47,8 +47,8 @@ struct enumerate_iterator
     }
 
 private:
-    iterator_type iterator_{};
-    index_type index_{};
+    iterator_type iterator_;
+    index_type index_ = 0;
 };
 
 template <typename Container, typename IndexType = int>

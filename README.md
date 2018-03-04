@@ -1,4 +1,4 @@
-# irate #
+# irate
 
 A C++17 library for iterating over C++ containers, ideas stolen shamelessly from
 python. During iteration, container elements are not modifiable, this is because
@@ -13,14 +13,14 @@ I didn't know how to make it work for all cases.
     * [range](#range)
 - [test](#test)
 
-## install ##
+## install
 
 irate is header only so you can simply copy the include folder into your own
 project. TODO: write some cmake targets and document them.
 
-## functionallity##
+## functionallity
 
-### zip ###
+### zip
 
 Allows iterating over any number of containers simultaneously. Iteration will
 stop upon reaching the end of the shortest container:
@@ -52,7 +52,7 @@ output:
 [42, e]
 ```
 
-### enumerate ###
+### enumerate
 
 Iterate over a single container along with an index which may start at any value
 (`enumerate(x, start)`) or from 0 by default (`enumerate(x)`):
@@ -81,7 +81,7 @@ output:
 [12, 3.14]
 ```
 
-### range ###
+### range
 
 As in python, `range(end)`, `range(begin, end)`, and `range(begin, end, step)`
 are supported. In the simplest case:
@@ -110,7 +110,7 @@ output:
 4
 ```
 
-## testing ##
+## testing
 
 irate uses [catch](https://github.com/catchorg/Catch2) for unit testing. To
 build and run the tests pass `-DIRATE_TEST=ON` to the `cmake` command then you

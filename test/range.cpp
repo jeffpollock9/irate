@@ -1,6 +1,4 @@
 
-#include <vector>
-
 #include "catch/catch.hpp"
 
 #include "irate.hpp"

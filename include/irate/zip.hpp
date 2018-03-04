@@ -31,7 +31,7 @@ bool all_not_equal(const Iterators& lhs,
 template <typename... Containers>
 struct zip_iterator
 {
-    static constexpr std::size_t size = sizeof...(Containers);
+    using indices = std::make_index_sequence<sizeof...(Containers)>;
 
     using iterator_type = std::tuple<typename Containers::const_iterator...>;
 
@@ -42,18 +42,17 @@ struct zip_iterator
 
     auto operator*() const
     {
-        return dereference(iterators_, std::make_index_sequence<size>{});
+        return dereference(iterators_, indices{});
     }
 
     void operator++()
     {
-        increment(iterators_, std::make_index_sequence<size>{});
+        increment(iterators_, indices{});
     }
 
     bool operator!=(const zip_iterator& rhs) const
     {
-        return all_not_equal(
-            iterators_, rhs.iterators_, std::make_index_sequence<size>{});
+        return all_not_equal(iterators_, rhs.iterators_, indices{});
     }
 
 private:

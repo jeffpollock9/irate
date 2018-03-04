@@ -1,6 +1,6 @@
 add_library(catch catch/catch.cpp)
 
-set(IRATE_TESTS enumerate zip)
+set(IRATE_TESTS enumerate zip range)
 
 foreach(test ${IRATE_TESTS})
     add_executable(${test} ${test}.cpp)

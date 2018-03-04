@@ -1,5 +1,5 @@
-#ifndef ZIP_HPP_
-#define ZIP_HPP_
+#ifndef IRATE_ZIP_HPP_
+#define IRATE_ZIP_HPP_
 
 #include <iterator>
 #include <tuple>
@@ -65,7 +65,7 @@ struct zip
 {
     using iterator_type = zip_iterator<Containers...>;
 
-    zip(const Containers&... containers)
+    explicit zip(const Containers&... containers)
         : begin_(std::begin(containers)...), end_(std::end(containers)...)
     {}
 
@@ -86,4 +86,4 @@ private:
 
 } // namespace irate
 
-#endif /* ZIP_HPP_ */
+#endif /* IRATE_ZIP_HPP_ */

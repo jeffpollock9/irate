@@ -29,7 +29,7 @@ struct enumerate_iterator
     enumerate_iterator(const iterator_type iterator, const index_type index)
         : iterator_(iterator), index_(index){};
 
-    enumerate_type operator*()
+    enumerate_type operator*() const
     {
         return {index_, *iterator_};
     }

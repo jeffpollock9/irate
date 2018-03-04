@@ -7,14 +7,10 @@
 namespace irate
 {
 
-template <std::size_t begin, std::size_t end, typename Iterators>
-void increment(Iterators& iterators)
+template <typename Iterators, std::size_t... Indices>
+void increment(Iterators& iterators, const std::index_sequence<Indices...>)
 {
-    if constexpr (begin < end)
-    {
-        ++std::get<begin>(iterators);
-        increment<begin + 1, end>(iterators);
-    }
+    (++std::get<Indices>(iterators), ...);
 }
 
 template <typename Iterators, std::size_t... Indices>
@@ -24,16 +20,12 @@ auto dereference(const Iterators& iterators,
     return std::tie(*std::get<Indices>(iterators)...);
 }
 
-template <std::size_t begin, std::size_t end, typename Iterators>
-bool all_not_equal(const Iterators& lhs, const Iterators& rhs)
+template <typename Iterators, std::size_t... Indices>
+bool all_not_equal(const Iterators& lhs,
+                   const Iterators& rhs,
+                   const std::index_sequence<Indices...>)
 {
-    if constexpr (begin < end)
-    {
-        return std::get<begin>(lhs) != std::get<begin>(rhs)
-            ? all_not_equal<begin + 1, end>(lhs, rhs)
-            : false;
-    }
-    return true;
+    return ((std::get<Indices>(lhs) != std::get<Indices>(rhs)) && ...);
 }
 
 template <typename... Containers>
@@ -43,26 +35,25 @@ struct zip_iterator
 
     using iterator_type = std::tuple<typename Containers::const_iterator...>;
 
-    using zip_type = std::tuple<typename Containers::value_type...>;
-
     explicit zip_iterator(
         const typename Containers::const_iterator... iterators)
         : iterators_(iterators...)
     {}
 
-    zip_type operator*() const
+    auto operator*() const
     {
         return dereference(iterators_, std::make_index_sequence<size>{});
     }
 
     void operator++()
     {
-        increment<0, size>(iterators_);
+        increment(iterators_, std::make_index_sequence<size>{});
     }
 
     bool operator!=(const zip_iterator& rhs) const
     {
-        return all_not_equal<0, size>(iterators_, rhs.iterators_);
+        return all_not_equal(
+            iterators_, rhs.iterators_, std::make_index_sequence<size>{});
     }
 
 private:

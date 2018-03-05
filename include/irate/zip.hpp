@@ -31,7 +31,7 @@ bool all_not_equal(const Iterators& lhs,
 template <typename... Containers>
 struct zip_iterator
 {
-    using indices = std::make_index_sequence<sizeof...(Containers)>;
+    using indices = std::index_sequence_for<Containers...>;
 
     using iterator_type = std::tuple<typename Containers::const_iterator...>;
 

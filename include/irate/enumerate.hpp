@@ -11,15 +11,25 @@ namespace irate
 template <typename Container, typename Index>
 struct enumerate_iterator
 {
-    using iterator_type = typename Container::const_iterator;
+    static constexpr bool is_const = std::is_const<Container>::value;
+
+    using iterator_type =
+        typename std::conditional_t<is_const,
+                                    typename Container::const_iterator,
+                                    typename Container::iterator>;
 
     using value_type = typename std::iterator_traits<iterator_type>::value_type;
     using index_type = Index;
 
+    using index_value_type = typename std::conditional_t<
+        is_const,
+        std::pair<const index_type, const value_type&>,
+        std::pair<const index_type, value_type&>>;
+
     enumerate_iterator(const iterator_type iterator, const index_type index)
         : iterator_(iterator), index_(index){};
 
-    std::pair<const index_type, const value_type&> operator*() const
+    index_value_type operator*()
     {
         return {index_, *iterator_};
     }

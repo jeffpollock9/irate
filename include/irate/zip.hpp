@@ -33,10 +33,13 @@ struct zip_iterator
 {
     using indices = std::index_sequence_for<Containers...>;
 
-    using iterator_type = std::tuple<typename Containers::const_iterator...>;
+    using iterators_type = std::tuple<
+        typename std::conditional_t<std::is_const<Containers>::value,
+                                    typename Containers::const_iterator,
+                                    typename Containers::iterator>...>;
 
-    explicit zip_iterator(
-        const typename Containers::const_iterator... iterators)
+    template <typename... Iterators>
+    explicit zip_iterator(const Iterators... iterators)
         : iterators_(iterators...)
     {}
 
@@ -56,7 +59,7 @@ struct zip_iterator
     }
 
 private:
-    iterator_type iterators_;
+    iterators_type iterators_;
 };
 
 template <typename... Containers>
@@ -64,7 +67,7 @@ struct zip
 {
     using iterator_type = zip_iterator<Containers...>;
 
-    explicit zip(const Containers&... containers)
+    explicit zip(Containers&... containers)
         : begin_(std::begin(containers)...), end_(std::end(containers)...)
     {}
 

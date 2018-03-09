@@ -1,8 +1,7 @@
 # irate
 
 A C++17 library for iterating over C++ containers, ideas stolen shamelessly from
-python. During iteration, container elements are not modifiable, this is because
-I didn't know how to make it work for all cases.
+python.
 
 # contents
 
@@ -33,7 +32,7 @@ int main()
     std::vector vec{1.0, 20.0, 3.0, 4.0, 42.0, 100.0, 42.0};
     const std::list lst{'i', 'r', 'a', 't', 'e'};
 
-    for (auto[v, l] : zip(vec, lst))
+    for (auto [v, l] : zip(vec, lst))
     {
         std::cout << "[" << v << ", " << l << "]\n";
     }
@@ -64,7 +63,7 @@ int main()
 
     const std::vector vec{42.0, 666.0, 3.14};
 
-    for (auto[ix, val] : enumerate(vec, 10))
+    for (auto [ix, val] : enumerate(vec, 10))
     {
         std::cout << "[" << ix << ", " << val << "]\n";
     }

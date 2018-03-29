@@ -11,7 +11,8 @@ message(STATUS "   IRATE_TEST: ${IRATE_TEST}")
 add_library(irate INTERFACE)
 
 target_include_directories(irate INTERFACE
-    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -22,3 +23,31 @@ if(IRATE_TEST)
     add_subdirectory(test)
 endif()
 
+set(CONFIG_INSTALL_DIR "lib/cmake/${PROJECT_NAME}")
+set(GENERATED_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
+set(VERSION_CONFIG "${GENERATED_DIR}/${PROJECT_NAME}ConfigVersion.cmake")
+set(PROJECT_CONFIG "${GENERATED_DIR}/${PROJECT_NAME}Config.cmake")
+set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
+
+set(NAMESPACE "${PROJECT_NAME}::")
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file("${VERSION_CONFIG}"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion)
+
+configure_file(${PROJECT_SOURCE_DIR}/cmake/config.cmake.in
+    ${PROJECT_CONFIG} @ONLY)
+
+install(TARGETS irate EXPORT ${TARGETS_EXPORT_NAME})
+
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/
+    DESTINATION include
+    FILES_MATCHING PATTERN "*.hpp")
+
+install(FILES ${PROJECT_CONFIG} ${VERSION_CONFIG}
+    DESTINATION ${CONFIG_INSTALL_DIR})
+
+install(EXPORT ${TARGETS_EXPORT_NAME}
+    NAMESPACE ${NAMESPACE}
+    DESTINATION ${CONFIG_INSTALL_DIR})

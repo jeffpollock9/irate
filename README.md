@@ -132,7 +132,7 @@ On my laptop the benchmark results are:
 
 ```bash
 jeff@jeff-laptop:~/workspace/irate/build$ ./benchmark/zip_bench
-2018-03-30 15:44:54
+2018-03-30 16:56:09
 Running ./benchmark/zip_bench
 Run on (4 X 2800 MHz CPU s)
 CPU Caches:
@@ -143,9 +143,10 @@ CPU Caches:
 ---------------------------------------------------------------
 Benchmark                        Time           CPU Iterations
 ---------------------------------------------------------------
-fixture/BM_irate_zip           771 ns        771 ns     877400
-fixture/BM_range_v3_zip        781 ns        781 ns     889246
-fixture/BM_loop                387 ns        387 ns    1811057
+fixture/BM_irate_zip          3592 ns       3592 ns     192381
+fixture/BM_range_v3_zip       2230 ns       2230 ns     311685
+fixture/BM_loop               2231 ns       2231 ns     312199
 ```
 
-Remember to pass `-DCMAKE_BUILD_TYPE=Release` when running benchmarks!
+So looks like irate is a bit behind! Remember to pass
+`-DCMAKE_BUILD_TYPE=Release` when running benchmarks!

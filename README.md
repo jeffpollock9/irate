@@ -10,12 +10,14 @@ python.
     * [zip](#zip)
     * [enumerate](#enumerate)
     * [range](#range)
-- [test](#test)
+- [testing](#testing)
+- [benchmark](#benchmark)
 
 ## install
 
 irate is header only so you can simply copy the include folder into your own
-project. TODO: write some cmake targets and document them.
+project. Alternatively you can install irate somewhere via the install target
+and pick up the irate config file.
 
 ## functionallity
 
@@ -115,3 +117,35 @@ irate uses [catch](https://github.com/catchorg/Catch2) for unit testing. To
 build and run the tests pass `-DIRATE_TEST=ON` to the `cmake` command then you
 can build the tests with `make` and run them with `ctest` or by running the test
 binaries in `build/test`.
+
+## benchmark
+
+A simple benchmark can be built by adding the cmake variable
+`-DIRATE_BENCHMARK=ON`. It requires [google
+benchmark](https://github.com/google/benchmark) and
+[range-v3](https://github.com/ericniebler/range-v3) to be installed
+somewhere. If they are installed in a non-standard location (i.e. not
+/usr/local) then you can pass their install location to cmake via:
+`-DCMAKE_PREFIX_PATH="path/to/benchmark/install;path/to/range-v3/install"`.
+
+On my laptop the benchmark results are:
+
+```bash
+jeff@jeff-laptop:~/workspace/irate/build$ ./benchmark/zip_bench
+2018-03-30 15:44:54
+Running ./benchmark/zip_bench
+Run on (4 X 2800 MHz CPU s)
+CPU Caches:
+  L1 Data 32K (x2)
+  L1 Instruction 32K (x2)
+  L2 Unified 256K (x2)
+  L3 Unified 3072K (x1)
+---------------------------------------------------------------
+Benchmark                        Time           CPU Iterations
+---------------------------------------------------------------
+fixture/BM_irate_zip           771 ns        771 ns     877400
+fixture/BM_range_v3_zip        781 ns        781 ns     889246
+fixture/BM_loop                387 ns        387 ns    1811057
+```
+
+Remember to pass `-DCMAKE_BUILD_TYPE=Release` when running benchmarks!

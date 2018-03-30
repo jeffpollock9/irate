@@ -3,10 +3,12 @@ cmake_minimum_required(VERSION 3.0.0)
 project(irate LANGUAGES CXX VERSION 0.0.1)
 
 option(IRATE_TEST "Build tests" OFF)
+option(IRATE_BENCHMARK "Build benchmarks" OFF)
 
 message(STATUS "Configuring irate version: ${PROJECT_VERSION}")
 message(STATUS "  Options:")
 message(STATUS "   IRATE_TEST: ${IRATE_TEST}")
+message(STATUS "   IRATE_BENCHMARK: ${IRATE_BENCHMARK}")
 
 add_library(irate INTERFACE)
 
@@ -23,6 +25,10 @@ if(IRATE_TEST)
     add_subdirectory(test)
 endif()
 
+if(IRATE_BENCHMARK)
+    add_subdirectory(benchmark)
+endif()
+
 set(CONFIG_INSTALL_DIR "lib/cmake/${PROJECT_NAME}")
 set(GENERATED_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
 set(VERSION_CONFIG "${GENERATED_DIR}/${PROJECT_NAME}ConfigVersion.cmake")
@@ -32,7 +38,7 @@ set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
 set(NAMESPACE "${PROJECT_NAME}::")
 
 include(CMakePackageConfigHelpers)
-write_basic_package_version_file("${VERSION_CONFIG}"
+write_basic_package_version_file(${VERSION_CONFIG}
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY SameMajorVersion)
 

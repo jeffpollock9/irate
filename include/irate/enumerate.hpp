@@ -5,6 +5,10 @@
 #include <type_traits>
 #include <utility>
 
+// TODO: begin and end don't need to be the same type, and the Index should
+//       really be Container::size_type. see:
+//       https://blog.therocode.net/2018/10/for-each-with-index
+
 namespace irate
 {
 

@@ -4,26 +4,29 @@
 namespace irate
 {
 
+namespace detail
+{
+
 template <typename Integer>
 struct range_iterator
 {
-    range_iterator(const Integer value, const Integer step)
+    constexpr explicit range_iterator(const Integer value, const Integer step)
         : value_(value), step_(step)
     {}
 
-    Integer operator*() const
+    constexpr Integer operator*() const
     {
         return value_;
     }
 
-    void operator++()
+    constexpr void operator++()
     {
         value_ += step_;
     }
 
-    bool operator!=(const range_iterator& rhs) const
+    constexpr bool operator!=(const Integer rhs) const
     {
-        return value_ < rhs.value_;
+        return value_ < rhs;
     }
 
 private:
@@ -31,31 +34,35 @@ private:
     Integer step_;
 };
 
+} // namespace detail
+
 template <typename Integer = int>
 struct range
 {
-    using iterator_type = range_iterator<Integer>;
+    using range_iterator = detail::range_iterator<Integer>;
 
-    explicit range(const Integer end) : begin_(0, 1), end_(end, 1)
+    constexpr explicit range(const Integer end) : begin_(0, 1), end_(end)
     {}
 
-    range(const Integer begin, const Integer end, const Integer step = 1)
-        : begin_(begin, step), end_(end, step)
+    constexpr range(const Integer begin,
+                    const Integer end,
+                    const Integer step = 1)
+        : begin_(begin, step), end_(end)
     {}
 
-    iterator_type begin() const
+    constexpr range_iterator begin() const
     {
         return begin_;
     }
 
-    iterator_type end() const
+    constexpr Integer end() const
     {
         return end_;
     }
 
 private:
-    iterator_type begin_;
-    iterator_type end_;
+    range_iterator begin_;
+    Integer end_;
 };
 
 } // namespace irate

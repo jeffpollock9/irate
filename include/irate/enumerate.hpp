@@ -41,7 +41,7 @@ private:
 
 } // namespace detail
 
-template <typename Container, typename Index = typename Container::size_type>
+template <typename Container, typename Index = int>
 struct enumerate
 {
     using container_iterator =
@@ -52,7 +52,7 @@ struct enumerate
     using enumerate_iterator =
         detail::enumerate_iterator<container_iterator, Index>;
 
-    constexpr explicit enumerate(Container& container, const Index start = {})
+    constexpr explicit enumerate(Container& container, const Index start = 0)
         : begin_(std::begin(container), start), end_(std::end(container))
     {}
 

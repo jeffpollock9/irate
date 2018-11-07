@@ -27,7 +27,7 @@ BENCHMARK_F(fixture, BM_irate_zip)(benchmark::State& state)
     {
         double z = 0.0;
 
-        for (auto[x, y] : irate::zip(v1, v2))
+        for (auto [x, y] : irate::zip(v1, v2))
         {
             benchmark::DoNotOptimize(z += x + y);
         }
@@ -40,7 +40,7 @@ BENCHMARK_F(fixture, BM_range_v3_zip)(benchmark::State& state)
     {
         double z = 0.0;
 
-        for (auto[x, y] : ranges::view::zip(v1, v2))
+        for (auto [x, y] : ranges::view::zip(v1, v2))
         {
             benchmark::DoNotOptimize(z += x + y);
         }

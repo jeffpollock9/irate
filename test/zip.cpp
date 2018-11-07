@@ -1,10 +1,9 @@
+#include <irate/zip.hpp>
+
+#include <catch/catch.hpp>
 
 #include <list>
 #include <vector>
-
-#include "catch/catch.hpp"
-
-#include "irate.hpp"
 
 using irate::zip;
 

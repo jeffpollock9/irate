@@ -2,80 +2,73 @@
 #define IRATE_ENUMERATE_HPP_
 
 #include <iterator>
+#include <tuple>
 #include <type_traits>
-#include <utility>
-
-// TODO: begin and end don't need to be the same type, and the Index should
-//       really be Container::size_type. see:
-//       https://blog.therocode.net/2018/10/for-each-with-index
 
 namespace irate
 {
 
-template <typename Container, typename Index>
+namespace detail
+{
+
+template <typename ContainerIterator, typename Index>
 struct enumerate_iterator
 {
-    static constexpr bool is_const = std::is_const<Container>::value;
-
-    using iterator_type =
-        typename std::conditional_t<is_const,
-                                    typename Container::const_iterator,
-                                    typename Container::iterator>;
-
-    using value_type = typename std::iterator_traits<iterator_type>::value_type;
-    using index_type = Index;
-
-    using index_value_type = typename std::conditional_t<
-        is_const,
-        std::pair<const index_type, const value_type&>,
-        std::pair<const index_type, value_type&>>;
-
-    enumerate_iterator(const iterator_type iterator, const index_type index)
+    constexpr enumerate_iterator(const ContainerIterator iterator,
+                                 const Index index)
         : iterator_(iterator), index_(index){};
 
-    index_value_type operator*()
+    constexpr auto operator*()
     {
-        return {index_, *iterator_};
+        return std::tie(index_, *iterator_);
     }
 
-    void operator++()
+    constexpr void operator++()
     {
         std::advance(iterator_, 1);
         ++index_;
     }
 
-    bool operator!=(const enumerate_iterator& rhs) const
+    constexpr bool operator!=(const ContainerIterator& rhs) const
     {
-        return iterator_ != rhs.iterator_;
+        return iterator_ != rhs;
     }
 
 private:
-    iterator_type iterator_;
-    index_type index_;
+    ContainerIterator iterator_;
+    Index index_;
 };
 
-template <typename Container, typename Index = int>
+} // namespace detail
+
+template <typename Container, typename Index = typename Container::size_type>
 struct enumerate
 {
-    using iterator_type = enumerate_iterator<Container, Index>;
+    using container_iterator =
+        std::conditional_t<std::is_const_v<Container>,
+                           typename Container::const_iterator,
+                           typename Container::iterator>;
 
-    explicit enumerate(Container& container, const Index start = 0)
-        : begin_(std::begin(container), start), end_(std::end(container), -1)
+    using enumerate_iterator =
+        detail::enumerate_iterator<container_iterator, Index>;
+
+    constexpr explicit enumerate(Container& container, const Index start = {})
+        : begin_(std::begin(container), start), end_(std::end(container))
     {}
 
-    iterator_type begin() const
+    constexpr enumerate_iterator begin() const
     {
         return begin_;
     }
 
-    iterator_type end() const
+    constexpr container_iterator end() const
     {
         return end_;
     }
 
 private:
-    iterator_type begin_;
-    iterator_type end_;
+    enumerate_iterator begin_;
+    container_iterator end_;
 };
 
 } // namespace irate

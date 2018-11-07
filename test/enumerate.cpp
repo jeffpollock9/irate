@@ -1,10 +1,9 @@
+#include <irate/enumerate.hpp>
+
+#include <catch/catch.hpp>
 
 #include <array>
 #include <vector>
-
-#include "catch/catch.hpp"
-
-#include "irate.hpp"
 
 using irate::enumerate;
 
@@ -26,11 +25,11 @@ TEST_CASE("enumerate const vector", "[enumerate]")
 
 TEST_CASE("enumerate non const array modifiable", "[enumerate]")
 {
-    std::array<double, 4> arr{{42.0, 666.0, 3.14, 0.0}};
+    std::array arr{42.0, 666.0, 3.14, 0.0};
 
     int step = 0;
 
-    for (auto && [ix, val] : enumerate(arr))
+    for (auto [ix, val] : enumerate(arr))
     {
         REQUIRE(ix == step);
         REQUIRE(val == arr[step]);

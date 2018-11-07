@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.0.0)
 
 project(irate LANGUAGES CXX VERSION 0.0.1)
 
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 option(IRATE_TEST "Build tests" OFF)
 option(IRATE_BENCHMARK "Build benchmarks" OFF)
 
@@ -16,9 +19,7 @@ target_include_directories(irate INTERFACE
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
+target_compile_features(irate INTERFACE cxx_std_17)
 
 if(IRATE_TEST)
     enable_testing()

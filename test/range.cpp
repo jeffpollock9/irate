@@ -1,7 +1,6 @@
+#include <irate/range.hpp>
 
-#include "catch/catch.hpp"
-
-#include "irate.hpp"
+#include <catch/catch.hpp>
 
 using irate::range;
 

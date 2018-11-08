@@ -1,0 +1,131 @@
+#+TITLE: irate
+#+AUTHOR: Jeff Pollock
+#+DESCRIPTION: A C++17 library for iterating over C++ containers
+
+* install
+
+irate is header only so you can simply copy the include folder into your own
+project. Alternatively you can install irate somewhere via the install target
+and pick up the irate cmake config file which exports the cmake target
+~irate::irate~.
+
+* functionallity
+
+** zip
+
+Allows iterating over any number of containers simultaneously. Iteration will
+stop upon reaching the end of the shortest container:
+
+#+BEGIN_SRC C++ :exports both :flags "-std=c++17 -I$HOME/workspace/irate/install/include"
+  #include <irate/zip.hpp>
+
+  #include <iostream>
+  #include <list>
+  #include <vector>
+
+  int main()
+  {
+      std::vector vec{1.0, 20.0, 3.0, 4.0, 42.0, 100.0, 42.0};
+      const std::list lst{'i', 'r', 'a', 't', 'e'};
+
+      for (auto [v, l] : irate::zip(vec, lst))
+      {
+          std::cout << "[" << v << ", " << l << "]\n";
+      }
+
+      return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+| [1  | i] |
+| [20 | r] |
+| [3  | a] |
+| [4  | t] |
+| [42 | e] |
+
+** enumerate
+
+Iterate over a single container along with an index which may start at any value
+(~enumerate(x, start)~) or from 0 by default (~enumerate(x)~):
+
+#+BEGIN_SRC C++ :exports both :flags "-std=c++17 -I$HOME/workspace/irate/install/include"
+  #include <irate/enumerate.hpp>
+
+  #include <iostream>
+  #include <vector>
+
+  int main()
+  {
+      const std::vector vec{42.0, 666.0, 3.14};
+
+      for (auto [ix, val] : irate::enumerate(vec, 10))
+      {
+          std::cout << "[" << ix << ", " << val << "]\n";
+      }
+
+      return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+| [10 | 42]   |
+| [11 | 666]  |
+| [12 | 3.14] |
+
+** range
+
+As in python, ~range(end)~, ~range(begin, end)~, and ~range(begin, end, step)~ are
+supported. In the simplest case:
+
+#+BEGIN_SRC C++ :exports both :flags "-std=c++17 -I$HOME/workspace/irate/install/include"
+  #include <irate/range.hpp>
+
+  #include <iostream>
+
+  int main()
+  {
+      for (auto ix : irate::range(5))
+      {
+          std::cout << ix << "\n";
+      }
+      return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+| 0 |
+| 1 |
+| 2 |
+| 3 |
+| 4 |
+
+* testing
+
+irate uses [[https://github.com/catchorg/Catch2][catch2]] for unit testing. To build and run the tests pass
+~-DIRATE_TEST=ON~ to the ~cmake~ command then you can build the tests with ~make~ and
+run them with `ctest` or by running the test binaries in ~build/test~.
+
+* benchmark
+
+A simple benchmark can be built by adding the cmake variable
+~-DIRATE_BENCHMARK=ON~. It requires [[https://github.com/google/benchmark][google benchmark]] and [[https://github.com/ericniebler/range-v3][range-v3]] to be installed
+somewhere. If they are installed in a non-standard location (i.e. not
+~/usr/local~) then you can pass their install location to cmake via:
+~-DCMAKE_PREFIX_PATH="path/to/benchmark/install;path/to/range-v3/install"~.
+
+On my laptop configuring with ~-DCMAKE_BUILD_TYPE=Release
+-DCMAKE_CXX_FLAGS="-march=native"~, the benchmark results are:
+
+#+BEGIN_SRC shell
+~/workspace/irate/release/benchmark/zip_bench --benchmark_color=false
+#+END_SRC
+
+#+RESULTS:
+| --------------------------------------------------------------- |      |     |            |    |          |
+| Benchmark                                                       | Time | CPU | Iterations |    |          |
+| --------------------------------------------------------------- |      |     |            |    |          |
+| fixture/BM_irate_zip                                            |   41 | ns  |         41 | ns | 17068131 |
+| fixture/BM_range_v3_zip                                         |   45 | ns  |         45 | ns | 15557292 |
+| fixture/BM_loop                                                 |   36 | ns  |         36 | ns | 19490972 |
+

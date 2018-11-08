@@ -1,68 +1,83 @@
 #include <algorithm>
-#include <numeric>
+#include <random>
 
 #include <benchmark/benchmark.h>
+#include <irate/zip.hpp>
 #include <range/v3/view/zip.hpp>
-
-#include "irate.hpp"
 
 struct fixture : benchmark::Fixture
 {
-    virtual void SetUp(benchmark::State& st) override
+    virtual void SetUp(benchmark::State& state) override
     {
-        v1.resize(700);
-        v2.resize(800);
+        std::mt19937 rng(666);
 
-        std::iota(v1.begin(), v1.end(), -777.0);
-        std::iota(v2.begin(), v2.end(), 42);
+        std::normal_distribution dnorm(0.0, 1.0);
+        std::uniform_int_distribution iunif(-10, 10);
+        std::normal_distribution fnorm(0.0f, 1.0f);
+
+        dvec.resize(17);
+        ivec.resize(42);
+        fvec.resize(56);
+
+        std::generate(dvec.begin(), dvec.end(), [&] { return dnorm(rng); });
+        std::generate(ivec.begin(), ivec.end(), [&] { return iunif(rng); });
+        std::generate(fvec.begin(), fvec.end(), [&] { return fnorm(rng); });
     }
 
-    std::vector<double> v1;
-    std::vector<int> v2;
+    std::vector<double> dvec;
+    std::vector<int> ivec;
+    std::vector<float> fvec;
 };
 
 BENCHMARK_F(fixture, BM_irate_zip)(benchmark::State& state)
 {
+    double sum;
     for (auto _ : state)
     {
-        double z = 0.0;
-
-        for (auto [x, y] : irate::zip(v1, v2))
+        sum = 0.0;
+        for (auto [x, y, z] : irate::zip(dvec, ivec, fvec))
         {
-            benchmark::DoNotOptimize(z += x + y);
+            sum += x + y + z;
+            benchmark::DoNotOptimize(sum);
         }
     }
+    state.counters["sum"] = sum;
 }
 
 BENCHMARK_F(fixture, BM_range_v3_zip)(benchmark::State& state)
 {
+    double sum;
     for (auto _ : state)
     {
-        double z = 0.0;
-
-        for (auto [x, y] : ranges::view::zip(v1, v2))
+        sum = 0.0;
+        for (auto [x, y, z] : ranges::view::zip(dvec, ivec, fvec))
         {
-            benchmark::DoNotOptimize(z += x + y);
+            sum += x + y + z;
+            benchmark::DoNotOptimize(sum);
         }
     }
+    state.counters["sum"] = sum;
 }
 
 BENCHMARK_F(fixture, BM_loop)(benchmark::State& state)
 {
+    double sum;
     for (auto _ : state)
     {
-        std::size_t n = std::min(v1.size(), v2.size());
+        const auto n = std::min({dvec.size(), ivec.size(), fvec.size()});
 
-        double z = 0.0;
-
+        sum = 0.0;
         for (std::size_t i = 0; i < n; ++i)
         {
-            auto x = v1[i];
-            auto y = v2[i];
+            const auto x = dvec[i];
+            const auto y = ivec[i];
+            const auto z = fvec[i];
 
-            benchmark::DoNotOptimize(z += x + y);
+            sum += x + y + z;
+            benchmark::DoNotOptimize(sum);
         }
     }
+    state.counters["sum"] = sum;
 }
 
 BENCHMARK_MAIN();

@@ -7,6 +7,9 @@
 namespace irate
 {
 
+namespace detail
+{
+
 template <typename Iterators, std::size_t... Indices>
 void increment(Iterators& iterators, const std::index_sequence<Indices...>)
 {
@@ -34,26 +37,26 @@ struct zip_iterator
     using indices = std::index_sequence_for<Containers...>;
 
     using iterators_type = std::tuple<
-        typename std::conditional_t<std::is_const<Containers>::value,
+        typename std::conditional_t<std::is_const_v<Containers>,
                                     typename Containers::const_iterator,
                                     typename Containers::iterator>...>;
 
     template <typename... Iterators>
-    explicit zip_iterator(const Iterators... iterators)
+    constexpr explicit zip_iterator(const Iterators... iterators)
         : iterators_(iterators...)
     {}
 
-    auto operator*() const
+    constexpr auto operator*() const
     {
         return dereference(iterators_, indices{});
     }
 
-    void operator++()
+    constexpr void operator++()
     {
         increment(iterators_, indices{});
     }
 
-    bool operator!=(const zip_iterator& rhs) const
+    constexpr bool operator!=(const zip_iterator& rhs) const
     {
         return all_not_equal(iterators_, rhs.iterators_, indices{});
     }
@@ -62,28 +65,30 @@ private:
     iterators_type iterators_;
 };
 
+} // namespace detail
+
 template <typename... Containers>
 struct zip
 {
-    using iterator_type = zip_iterator<Containers...>;
+    using zip_iterator = detail::zip_iterator<Containers...>;
 
-    explicit zip(Containers&... containers)
+    constexpr explicit zip(Containers&... containers)
         : begin_(std::begin(containers)...), end_(std::end(containers)...)
     {}
 
-    iterator_type begin() const
+    constexpr zip_iterator begin() const
     {
         return begin_;
     }
 
-    iterator_type end() const
+    constexpr zip_iterator end() const
     {
         return end_;
     }
 
 private:
-    iterator_type begin_;
-    iterator_type end_;
+    zip_iterator begin_;
+    zip_iterator end_;
 };
 
 } // namespace irate

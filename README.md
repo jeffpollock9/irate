@@ -1,17 +1,17 @@
 
 # Table of Contents
 
-1.  [install](#orgca71fa6)
-2.  [functionallity](#org1fa134e)
-    1.  [zip](#org03b13f0)
-    2.  [enumerate](#org2b32879)
-    3.  [range](#org6d58cc0)
-3.  [testing](#orga465a00)
-4.  [benchmark](#org905823d)
+1.  [install](#org8be9d0f)
+2.  [functionallity](#org3874374)
+    1.  [zip](#orgc08dd35)
+    2.  [enumerate](#org1dff5e9)
+    3.  [range](#org2bf197b)
+3.  [testing](#org26148cb)
+4.  [benchmark](#org31f249e)
 
 
 
-<a id="orgca71fa6"></a>
+<a id="org8be9d0f"></a>
 
 # install
 
@@ -21,12 +21,12 @@ and pick up the irate cmake config file which exports the cmake target
 `irate::irate`.
 
 
-<a id="org1fa134e"></a>
+<a id="org3874374"></a>
 
 # functionallity
 
 
-<a id="org03b13f0"></a>
+<a id="orgc08dd35"></a>
 
 ## zip
 
@@ -93,7 +93,7 @@ stop upon reaching the end of the shortest container:
 </table>
 
 
-<a id="org2b32879"></a>
+<a id="org1dff5e9"></a>
 
 ## enumerate
 
@@ -146,7 +146,7 @@ Iterate over a single container along with an index which may start at any value
 </table>
 
 
-<a id="org6d58cc0"></a>
+<a id="org2bf197b"></a>
 
 ## range
 
@@ -200,7 +200,7 @@ supported. In the simplest case:
 </table>
 
 
-<a id="orga465a00"></a>
+<a id="org26148cb"></a>
 
 # testing
 
@@ -209,7 +209,7 @@ irate uses [catch2](https://github.com/catchorg/Catch2) for unit testing. To bui
 run them with \`ctest\` or by running the test binaries in `build/test`.
 
 
-<a id="org905823d"></a>
+<a id="org31f249e"></a>
 
 # benchmark
 
@@ -223,4 +223,82 @@ On my laptop configuring with `-DCMAKE_BUILD_TYPE=Release
 -DCMAKE_CXX_FLAGS="-march=native"`, the benchmark results are:
 
     ~/workspace/irate/release/benchmark/zip_bench --benchmark_color=false
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">---------------------------------------------------------------</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+</tr>
+
+
+<tr>
+<td class="org-left">Benchmark</td>
+<td class="org-right">Time</td>
+<td class="org-left">CPU</td>
+<td class="org-right">Iterations</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+</tr>
+
+
+<tr>
+<td class="org-left">---------------------------------------------------------------</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+</tr>
+
+
+<tr>
+<td class="org-left">fixture/BM<sub>irate</sub><sub>zip</sub></td>
+<td class="org-right">40</td>
+<td class="org-left">ns</td>
+<td class="org-right">40</td>
+<td class="org-left">ns</td>
+<td class="org-right">13637350</td>
+</tr>
+
+
+<tr>
+<td class="org-left">fixture/BM<sub>range</sub><sub>v3</sub><sub>zip</sub></td>
+<td class="org-right">45</td>
+<td class="org-left">ns</td>
+<td class="org-right">45</td>
+<td class="org-left">ns</td>
+<td class="org-right">15693680</td>
+</tr>
+
+
+<tr>
+<td class="org-left">fixture/BM<sub>loop</sub></td>
+<td class="org-right">36</td>
+<td class="org-left">ns</td>
+<td class="org-right">36</td>
+<td class="org-left">ns</td>
+<td class="org-right">19486429</td>
+</tr>
+</tbody>
+</table>
 

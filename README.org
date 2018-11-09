@@ -117,7 +117,7 @@ somewhere. If they are installed in a non-standard location (i.e. not
 On my laptop configuring with ~-DCMAKE_BUILD_TYPE=Release
 -DCMAKE_CXX_FLAGS="-march=native"~, the benchmark results are:
 
-#+BEGIN_SRC shell
+#+BEGIN_SRC shell :exports both
 ~/workspace/irate/release/benchmark/zip_bench --benchmark_color=false
 #+END_SRC
 

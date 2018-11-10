@@ -3,10 +3,13 @@ include(add_basic_warnings)
 find_package(benchmark CONFIG REQUIRED)
 find_package(range-v3 CONFIG REQUIRED)
 
-add_executable(zip_bench zip.cpp)
-add_basic_warnings(zip_bench)
+set(IRATE_BENCHMARKS zip product)
 
-target_link_libraries(zip_bench
-    benchmark::benchmark
-    range-v3
-    irate)
+foreach(benchmark ${IRATE_BENCHMARKS})
+    set(name "${benchmark}_benchmark")
+    add_executable(${name} ${benchmark}.cpp)
+    target_link_libraries(${name} irate benchmark::benchmark)
+    add_basic_warnings(${name})
+endforeach()
+
+target_link_libraries(zip_benchmark range-v3)

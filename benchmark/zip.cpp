@@ -31,37 +31,42 @@ struct fixture : benchmark::Fixture
 
 BENCHMARK_F(fixture, BM_irate_zip)(benchmark::State& state)
 {
+    double sum = 0.0;
     for (auto _ : state)
     {
-        double sum = 0.0;
+        sum = 0.0;
         for (auto [x, y, z] : irate::zip(dvec, ivec, fvec))
         {
             sum += x + y + z;
             benchmark::DoNotOptimize(sum);
         }
     }
+    state.counters["test"] = sum;
 }
 
 BENCHMARK_F(fixture, BM_range_v3_zip)(benchmark::State& state)
 {
+    double sum = 0.0;
     for (auto _ : state)
     {
-        double sum = 0.0;
+        sum = 0.0;
         for (auto [x, y, z] : ranges::view::zip(dvec, ivec, fvec))
         {
             sum += x + y + z;
             benchmark::DoNotOptimize(sum);
         }
     }
+    state.counters["test"] = sum;
 }
 
 BENCHMARK_F(fixture, BM_loop)(benchmark::State& state)
 {
+    double sum = 0.0;
     for (auto _ : state)
     {
-        const auto n = std::min({dvec.size(), ivec.size(), fvec.size()});
+        const std::size_t n = std::min({dvec.size(), ivec.size(), fvec.size()});
 
-        double sum = 0.0;
+        sum = 0.0;
         for (std::size_t i = 0; i < n; ++i)
         {
             const auto x = dvec[i];
@@ -72,6 +77,7 @@ BENCHMARK_F(fixture, BM_loop)(benchmark::State& state)
             benchmark::DoNotOptimize(sum);
         }
     }
+    state.counters["test"] = sum;
 }
 
 BENCHMARK_MAIN();

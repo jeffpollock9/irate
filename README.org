@@ -100,6 +100,39 @@ supported. In the simplest case:
 | 3 |
 | 4 |
 
+** product
+
+Cartesian product of iterables:
+
+#+BEGIN_SRC C++ :exports both :flags "-std=c++17 -I$HOME/workspace/irate/install/include"
+  #include <irate/product.hpp>
+
+  #include <iostream>
+  #include <list>
+  #include <vector>
+
+  int main()
+  {
+      const std::vector vec{-10.0, 10.0, 100.0};
+      const std::list lst{"foo", "bar"};
+
+      for (auto [v, l] : irate::product(vec, lst))
+      {
+          std::cout << "[" << v << ", " << l << "]\n";
+      }
+
+      return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+| [-10 | foo] |
+| [-10 | bar] |
+| [10  | foo] |
+| [10  | bar] |
+| [100 | foo] |
+| [100 | bar] |
+
 * testing
 
 irate uses [[https://github.com/catchorg/Catch2][catch2]] for unit testing. To build and run the tests pass
@@ -118,14 +151,24 @@ On my laptop configuring with ~-DCMAKE_BUILD_TYPE=Release
 -DCMAKE_CXX_FLAGS="-march=native"~, the benchmark results are:
 
 #+BEGIN_SRC shell :exports both
-~/workspace/irate/release/benchmark/zip_bench --benchmark_color=false
+~/workspace/irate/release/benchmark/zip_benchmark --benchmark_color=false
 #+END_SRC
 
 #+RESULTS:
-| --------------------------------------------------------------- |      |     |            |    |          |
-| Benchmark                                                       | Time | CPU | Iterations |    |          |
-| --------------------------------------------------------------- |      |     |            |    |          |
-| fixture/BM_irate_zip                                            |   41 | ns  |         41 | ns | 17068131 |
-| fixture/BM_range_v3_zip                                         |   45 | ns  |         45 | ns | 15557292 |
-| fixture/BM_loop                                                 |   36 | ns  |         36 | ns | 19490972 |
+| ------------------------------------------------------------------------------- |      |     |            |                 |          |              |
+| Benchmark                                                                       | Time | CPU | Iterations | UserCounters... |          |              |
+| ------------------------------------------------------------------------------- |      |     |            |                 |          |              |
+| fixture/BM_irate_zip                                                            |   51 | ns  |         51 | ns              | 11788332 | test=5.67854 |
+| fixture/BM_range_v3_zip                                                         |   55 | ns  |         55 | ns              | 12542485 | test=5.67854 |
+| fixture/BM_loop                                                                 |   49 | ns  |         49 | ns              | 14341058 | test=5.67854 |
 
+#+BEGIN_SRC shell :exports both
+~/workspace/irate/release/benchmark/product_benchmark --benchmark_color=false
+#+END_SRC
+
+#+RESULTS:
+| -------------------------------------------------------------------------------- |      |     |            |                 |        |               |
+| Benchmark                                                                        | Time | CPU | Iterations | UserCounters... |        |               |
+| -------------------------------------------------------------------------------- |      |     |            |                 |        |               |
+| fixture/BM_irate_product                                                         | 1744 | ns  |       1744 | ns              | 395904 | test=-251.067 |
+| fixture/BM_loop                                                                  | 1768 | ns  |       1768 | ns              | 396367 | test=-251.067 |

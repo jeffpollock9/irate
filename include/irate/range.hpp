@@ -1,46 +1,14 @@
 #ifndef IRATE_RANGE_HPP_
 #define IRATE_RANGE_HPP_
 
+#include <irate/detail/range.hpp>
+
 namespace irate
 {
-
-namespace detail
-{
-
-template <typename Integer>
-struct range_iterator
-{
-    constexpr explicit range_iterator(const Integer value, const Integer step)
-        : value_(value), step_(step)
-    {}
-
-    constexpr Integer operator*() const
-    {
-        return value_;
-    }
-
-    constexpr void operator++()
-    {
-        value_ += step_;
-    }
-
-    constexpr bool operator!=(const Integer rhs) const
-    {
-        return value_ < rhs;
-    }
-
-private:
-    Integer value_;
-    Integer step_;
-};
-
-} // namespace detail
 
 template <typename Integer = int>
 struct range
 {
-    using range_iterator = detail::range_iterator<Integer>;
-
     constexpr explicit range(const Integer end) : begin_(0, 1), end_(end)
     {}
 
@@ -50,17 +18,19 @@ struct range
         : begin_(begin, step), end_(end)
     {}
 
-    constexpr range_iterator begin() const
+    constexpr auto begin() const
     {
         return begin_;
     }
 
-    constexpr Integer end() const
+    constexpr auto end() const
     {
         return end_;
     }
 
 private:
+    using range_iterator = detail::range_iterator<Integer>;
+
     range_iterator begin_;
     Integer end_;
 };

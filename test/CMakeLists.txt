@@ -4,11 +4,12 @@ add_library(catch catch/catch.cpp)
 
 target_include_directories(catch PUBLIC ${PROJECT_SOURCE_DIR}/test)
 
-set(IRATE_TESTS enumerate zip range)
+set(IRATE_TESTS enumerate zip range product)
 
 foreach(test ${IRATE_TESTS})
-    add_executable(${test} ${test}.cpp)
-    target_link_libraries(${test} irate catch)
-    add_basic_warnings(${test})
-    add_test(${test} ${test})
+    set(name "${test}_test")
+    add_executable(${name} ${test}.cpp)
+    target_link_libraries(${name} irate catch)
+    add_basic_warnings(${name})
+    add_test(${test} ${name})
 endforeach()

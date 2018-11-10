@@ -1,17 +1,18 @@
 
 # Table of Contents
 
-1.  [install](#org8be9d0f)
-2.  [functionallity](#org3874374)
-    1.  [zip](#orgc08dd35)
-    2.  [enumerate](#org1dff5e9)
-    3.  [range](#org2bf197b)
-3.  [testing](#org26148cb)
-4.  [benchmark](#org31f249e)
+1.  [install](#orga179e5c)
+2.  [functionallity](#org3d39cf2)
+    1.  [zip](#org56aec7b)
+    2.  [enumerate](#org5f2425c)
+    3.  [range](#orgaac0e3c)
+    4.  [product](#org5f7490c)
+3.  [testing](#orgb006c69)
+4.  [benchmark](#orgbba4eae)
 
 
 
-<a id="org8be9d0f"></a>
+<a id="orga179e5c"></a>
 
 # install
 
@@ -21,12 +22,12 @@ and pick up the irate cmake config file which exports the cmake target
 `irate::irate`.
 
 
-<a id="org3874374"></a>
+<a id="org3d39cf2"></a>
 
 # functionallity
 
 
-<a id="orgc08dd35"></a>
+<a id="org56aec7b"></a>
 
 ## zip
 
@@ -93,7 +94,7 @@ stop upon reaching the end of the shortest container:
 </table>
 
 
-<a id="org1dff5e9"></a>
+<a id="org5f2425c"></a>
 
 ## enumerate
 
@@ -146,7 +147,7 @@ Iterate over a single container along with an index which may start at any value
 </table>
 
 
-<a id="org2bf197b"></a>
+<a id="orgaac0e3c"></a>
 
 ## range
 
@@ -200,7 +201,79 @@ supported. In the simplest case:
 </table>
 
 
-<a id="org26148cb"></a>
+<a id="org5f7490c"></a>
+
+## product
+
+Cartesian product of iterables:
+
+    #include <irate/product.hpp>
+    
+    #include <iostream>
+    #include <list>
+    #include <vector>
+    
+    int main()
+    {
+        const std::vector vec{-10.0, 10.0, 100.0};
+        const std::list lst{"foo", "bar"};
+    
+        for (auto [v, l] : irate::product(vec, lst))
+        {
+            std::cout << "[" << v << ", " << l << "]\n";
+        }
+    
+        return 0;
+    }
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">[-10</td>
+<td class="org-left">foo]</td>
+</tr>
+
+
+<tr>
+<td class="org-left">[-10</td>
+<td class="org-left">bar]</td>
+</tr>
+
+
+<tr>
+<td class="org-left">[10</td>
+<td class="org-left">foo]</td>
+</tr>
+
+
+<tr>
+<td class="org-left">[10</td>
+<td class="org-left">bar]</td>
+</tr>
+
+
+<tr>
+<td class="org-left">[100</td>
+<td class="org-left">foo]</td>
+</tr>
+
+
+<tr>
+<td class="org-left">[100</td>
+<td class="org-left">bar]</td>
+</tr>
+</tbody>
+</table>
+
+
+<a id="orgb006c69"></a>
 
 # testing
 
@@ -209,7 +282,7 @@ irate uses [catch2](https://github.com/catchorg/Catch2) for unit testing. To bui
 run them with \`ctest\` or by running the test binaries in `build/test`.
 
 
-<a id="org31f249e"></a>
+<a id="orgbba4eae"></a>
 
 # benchmark
 
@@ -222,7 +295,7 @@ somewhere. If they are installed in a non-standard location (i.e. not
 On my laptop configuring with `-DCMAKE_BUILD_TYPE=Release
 -DCMAKE_CXX_FLAGS="-march=native"`, the benchmark results are:
 
-    ~/workspace/irate/release/benchmark/zip_bench --benchmark_color=false
+    ~/workspace/irate/release/benchmark/zip_benchmark --benchmark_color=false
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -239,15 +312,18 @@ On my laptop configuring with `-DCMAKE_BUILD_TYPE=Release
 <col  class="org-left" />
 
 <col  class="org-right" />
+
+<col  class="org-left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="org-left">---------------------------------------------------------------</td>
+<td class="org-left">-------------------------------------------------------------------------------</td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-right">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 
@@ -256,48 +332,130 @@ On my laptop configuring with `-DCMAKE_BUILD_TYPE=Release
 <td class="org-right">Time</td>
 <td class="org-left">CPU</td>
 <td class="org-right">Iterations</td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left">UserCounters&#x2026;</td>
 <td class="org-right">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 
 <tr>
-<td class="org-left">---------------------------------------------------------------</td>
+<td class="org-left">-------------------------------------------------------------------------------</td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-right">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 
 <tr>
 <td class="org-left">fixture/BM<sub>irate</sub><sub>zip</sub></td>
-<td class="org-right">40</td>
+<td class="org-right">51</td>
 <td class="org-left">ns</td>
-<td class="org-right">40</td>
+<td class="org-right">51</td>
 <td class="org-left">ns</td>
-<td class="org-right">13637350</td>
+<td class="org-right">13459517</td>
+<td class="org-left">test=5.67854</td>
 </tr>
 
 
 <tr>
 <td class="org-left">fixture/BM<sub>range</sub><sub>v3</sub><sub>zip</sub></td>
-<td class="org-right">45</td>
+<td class="org-right">56</td>
 <td class="org-left">ns</td>
-<td class="org-right">45</td>
+<td class="org-right">56</td>
 <td class="org-left">ns</td>
-<td class="org-right">15693680</td>
+<td class="org-right">12579842</td>
+<td class="org-left">test=5.67854</td>
 </tr>
 
 
 <tr>
 <td class="org-left">fixture/BM<sub>loop</sub></td>
-<td class="org-right">36</td>
+<td class="org-right">49</td>
 <td class="org-left">ns</td>
-<td class="org-right">36</td>
+<td class="org-right">49</td>
 <td class="org-left">ns</td>
-<td class="org-right">19486429</td>
+<td class="org-right">14308062</td>
+<td class="org-left">test=5.67854</td>
+</tr>
+</tbody>
+</table>
+
+    ~/workspace/irate/release/benchmark/product_benchmark --benchmark_color=false
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">--------------------------------------------------------------------------------</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+
+<tr>
+<td class="org-left">Benchmark</td>
+<td class="org-left">Time</td>
+<td class="org-left">CPU</td>
+<td class="org-left">Iterations</td>
+<td class="org-left">UserCounters&#x2026;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+
+<tr>
+<td class="org-left">--------------------------------------------------------------------------------</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+
+<tr>
+<td class="org-left">fixture/BM<sub>irate</sub><sub>product</sub></td>
+<td class="org-left">1744</td>
+<td class="org-left">ns</td>
+<td class="org-left">1744</td>
+<td class="org-left">ns</td>
+<td class="org-left">401177</td>
+<td class="org-left">test=-251.067</td>
+</tr>
+
+
+<tr>
+<td class="org-left">fixture/BM<sub>loop</sub></td>
+<td class="org-left">1766</td>
+<td class="org-left">ns</td>
+<td class="org-left">1766</td>
+<td class="org-left">ns</td>
+<td class="org-left">396355</td>
+<td class="org-left">test=-251.067</td>
 </tr>
 </tbody>
 </table>

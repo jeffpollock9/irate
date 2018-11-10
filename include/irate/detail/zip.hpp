@@ -1,5 +1,5 @@
-#ifndef IRATE_DETAIL_ZIP_
-#define IRATE_DETAIL_ZIP_
+#ifndef IRATE_DETAIL_ZIP_HPP_
+#define IRATE_DETAIL_ZIP_HPP_
 
 #include <tuple>
 #include <type_traits>
@@ -63,4 +63,4 @@ private:
 
 } // namespace irate
 
-#endif /* IRATE_DETAIL_ZIP_ */
+#endif /* IRATE_DETAIL_ZIP_HPP_ */

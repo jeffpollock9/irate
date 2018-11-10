@@ -1,5 +1,5 @@
-#ifndef PRODUCT_H
-#define PRODUCT_H
+#ifndef IRATE_DETAIL_PRODUCT_HPP_
+#define IRATE_DETAIL_PRODUCT_HPP_
 
 #include <iterator>
 #include <tuple>
@@ -72,4 +72,4 @@ private:
 
 } // namespace irate
 
-#endif /* PRODUCT_H */
+#endif /* IRATE_DETAIL_PRODUCT_HPP_ */

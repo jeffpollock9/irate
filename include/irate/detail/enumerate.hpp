@@ -15,7 +15,7 @@ struct enumerate_iterator
     constexpr enumerate_iterator(const Iterator iterator, const Index index)
         : iterator_(iterator), index_(index){};
 
-    constexpr auto operator*()
+    constexpr auto operator*() const
     {
         return std::tie(index_, *iterator_);
     }

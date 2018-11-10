@@ -150,25 +150,29 @@ somewhere. If they are installed in a non-standard location (i.e. not
 On my laptop configuring with ~-DCMAKE_BUILD_TYPE=Release
 -DCMAKE_CXX_FLAGS="-march=native"~, the benchmark results are:
 
-#+BEGIN_SRC shell :exports both
+#+BEGIN_SRC shell :exports both :results org
 ~/workspace/irate/release/benchmark/zip_benchmark --benchmark_color=false
 #+END_SRC
 
 #+RESULTS:
-| ------------------------------------------------------------------------------- |      |     |            |                 |          |              |
-| Benchmark                                                                       | Time | CPU | Iterations | UserCounters... |          |              |
-| ------------------------------------------------------------------------------- |      |     |            |                 |          |              |
-| fixture/BM_irate_zip                                                            |   51 | ns  |         51 | ns              | 11788332 | test=5.67854 |
-| fixture/BM_range_v3_zip                                                         |   55 | ns  |         55 | ns              | 12542485 | test=5.67854 |
-| fixture/BM_loop                                                                 |   49 | ns  |         49 | ns              | 14341058 | test=5.67854 |
+#+BEGIN_SRC org
+-------------------------------------------------------------------------------
+Benchmark                        Time           CPU Iterations UserCounters...
+-------------------------------------------------------------------------------
+fixture/BM_irate_zip            51 ns         51 ns   13023138 test=5.67854
+fixture/BM_range_v3_zip         55 ns         55 ns   12611032 test=5.67854
+fixture/BM_loop                 51 ns         51 ns   14343458 test=5.67854
+#+END_SRC
 
-#+BEGIN_SRC shell :exports both
+#+BEGIN_SRC shell :exports both :results org
 ~/workspace/irate/release/benchmark/product_benchmark --benchmark_color=false
 #+END_SRC
 
 #+RESULTS:
-| -------------------------------------------------------------------------------- |      |     |            |                 |        |               |
-| Benchmark                                                                        | Time | CPU | Iterations | UserCounters... |        |               |
-| -------------------------------------------------------------------------------- |      |     |            |                 |        |               |
-| fixture/BM_irate_product                                                         | 1744 | ns  |       1744 | ns              | 395904 | test=-251.067 |
-| fixture/BM_loop                                                                  | 1768 | ns  |       1768 | ns              | 396367 | test=-251.067 |
+#+BEGIN_SRC org
+--------------------------------------------------------------------------------
+Benchmark                         Time           CPU Iterations UserCounters...
+--------------------------------------------------------------------------------
+fixture/BM_irate_product       1773 ns       1773 ns     393357 test=-251.067
+fixture/BM_loop                1810 ns       1810 ns     389415 test=-251.067
+#+END_SRC

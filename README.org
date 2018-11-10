@@ -139,40 +139,45 @@ irate uses [[https://github.com/catchorg/Catch2][catch2]] for unit testing. To b
 ~-DIRATE_TEST=ON~ to the ~cmake~ command then you can build the tests with ~make~ and
 run them with `ctest` or by running the test binaries in ~build/test~.
 
-* benchmark
+* benchmarks
 
 A simple benchmark can be built by adding the cmake variable
 ~-DIRATE_BENCHMARK=ON~. It requires [[https://github.com/google/benchmark][google benchmark]] and [[https://github.com/ericniebler/range-v3][range-v3]] to be installed
 somewhere. If they are installed in a non-standard location (i.e. not
-~/usr/local~) then you can pass their install location to cmake via:
-~-DCMAKE_PREFIX_PATH="path/to/benchmark/install;path/to/range-v3/install"~.
+~/usr/local~) then you can pass their install location to cmake using
+~CMAKE_PREFIX_PATH~.
 
-On my laptop configuring with ~-DCMAKE_BUILD_TYPE=Release
--DCMAKE_CXX_FLAGS="-march=native"~, the benchmark results are:
+On my laptop configuring with:
 
-#+BEGIN_SRC shell :exports both :results org
-~/workspace/irate/release/benchmark/zip_benchmark --benchmark_color=false
+#+BEGIN_SRC shell :noeval
+  cmake path/to/irate -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++-8 -DCMAKE_CXX_FLAGS=-march=native -DIRATE_BENCHMARK=ON
+#+END_SRC
+
+the benchmark results are:
+
+#+BEGIN_SRC shell :exports both :results drawer
+  ~/workspace/irate/release/benchmark/zip_benchmark --benchmark_color=false
 #+END_SRC
 
 #+RESULTS:
-#+BEGIN_SRC org
+:RESULTS:
 -------------------------------------------------------------------------------
 Benchmark                        Time           CPU Iterations UserCounters...
 -------------------------------------------------------------------------------
-fixture/BM_irate_zip            51 ns         51 ns   13023138 test=5.67854
-fixture/BM_range_v3_zip         55 ns         55 ns   12611032 test=5.67854
-fixture/BM_loop                 51 ns         51 ns   14343458 test=5.67854
-#+END_SRC
+fixture/BM_irate_zip            39 ns         39 ns   17797980 test=5.67854
+fixture/BM_range_v3_zip         40 ns         40 ns   17539382 test=5.67854
+fixture/BM_loop                 40 ns         40 ns   17662127 test=5.67854
+:END:
 
-#+BEGIN_SRC shell :exports both :results org
-~/workspace/irate/release/benchmark/product_benchmark --benchmark_color=false
+#+BEGIN_SRC shell :exports both :results drawer
+  ~/workspace/irate/release/benchmark/product_benchmark --benchmark_color=false
 #+END_SRC
 
 #+RESULTS:
-#+BEGIN_SRC org
+:RESULTS:
 --------------------------------------------------------------------------------
 Benchmark                         Time           CPU Iterations UserCounters...
 --------------------------------------------------------------------------------
-fixture/BM_irate_product       1773 ns       1773 ns     393357 test=-251.067
-fixture/BM_loop                1810 ns       1810 ns     389415 test=-251.067
-#+END_SRC
+fixture/BM_irate_product       1299 ns       1299 ns     538201 test=-251.067
+fixture/BM_loop                1332 ns       1332 ns     525250 test=-251.067
+:END:

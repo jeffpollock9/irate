@@ -155,29 +155,29 @@ On my laptop configuring with:
 
 the benchmark results are:
 
-#+BEGIN_SRC shell :exports both :results drawer
+#+BEGIN_SRC shell :exports both :results org
   ~/workspace/irate/release/benchmark/zip_benchmark --benchmark_color=false
 #+END_SRC
 
 #+RESULTS:
-:RESULTS:
+#+BEGIN_SRC org
 -------------------------------------------------------------------------------
 Benchmark                        Time           CPU Iterations UserCounters...
 -------------------------------------------------------------------------------
-fixture/BM_irate_zip            39 ns         39 ns   17797980 test=5.67854
-fixture/BM_range_v3_zip         40 ns         40 ns   17539382 test=5.67854
-fixture/BM_loop                 40 ns         40 ns   17662127 test=5.67854
-:END:
+fixture/BM_irate_zip            39 ns         39 ns   13830810 test=5.67854
+fixture/BM_range_v3_zip         47 ns         47 ns   14869365 test=5.67854
+fixture/BM_loop                 40 ns         40 ns   17686838 test=5.67854
+#+END_SRC
 
-#+BEGIN_SRC shell :exports both :results drawer
+#+BEGIN_SRC shell :exports both :results org
   ~/workspace/irate/release/benchmark/product_benchmark --benchmark_color=false
 #+END_SRC
 
 #+RESULTS:
-:RESULTS:
+#+BEGIN_SRC org
 --------------------------------------------------------------------------------
 Benchmark                         Time           CPU Iterations UserCounters...
 --------------------------------------------------------------------------------
-fixture/BM_irate_product       1299 ns       1299 ns     538201 test=-251.067
-fixture/BM_loop                1332 ns       1332 ns     525250 test=-251.067
-:END:
+fixture/BM_irate_product       1299 ns       1299 ns     527913 test=-251.067
+fixture/BM_loop                1331 ns       1331 ns     525534 test=-251.067
+#+END_SRC

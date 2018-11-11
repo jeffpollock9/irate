@@ -1,8 +1,13 @@
+#+TITLE: irate
+
 [[https://travis-ci.com/jeffpollock9/irate][https://travis-ci.com/jeffpollock9/irate.svg?branch=master]]
 
-#+TITLE: irate
-#+AUTHOR: Jeff Pollock
-#+DESCRIPTION: A C++17 library for iterating over C++ containers
+A C++17 library for iterating over C++ containers.
+
+* why?
+
+this project is mainly for learning purposes - if you need this sort of
+functionallity then you should consider using [[https://github.com/ryanhaining/cppitertools][cppitertools]] or [[https://github.com/ericniebler/range-v3][range-v3]].
 
 * install
 

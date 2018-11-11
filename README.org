@@ -6,7 +6,7 @@ A C++17 library for iterating over C++ containers.
 
 * why?
 
-this project is mainly for learning purposes - if you need this sort of
+This project is mainly for learning purposes - if you need this sort of
 functionallity then you should consider using [[https://github.com/ryanhaining/cppitertools][cppitertools]] or [[https://github.com/ericniebler/range-v3][range-v3]].
 
 * install
@@ -145,7 +145,7 @@ Cartesian product of iterables:
 
 irate uses [[https://github.com/catchorg/Catch2][catch2]] for unit testing. To build and run the tests pass
 ~-DIRATE_TEST=ON~ to the ~cmake~ command then you can build the tests with ~make~ and
-run them with `ctest` or by running the test binaries in ~build/test~.
+run them with ~ctest~ or by running the test binaries in ~build/test~.
 
 * benchmarks
 

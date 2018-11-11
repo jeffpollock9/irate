@@ -91,6 +91,7 @@ supported. In the simplest case:
       {
           std::cout << ix << "\n";
       }
+
       return 0;
   }
 #+END_SRC
@@ -177,9 +178,10 @@ fixture/BM_loop                 40 ns         40 ns   17686838 test=5.67854
 
 #+RESULTS:
 #+BEGIN_SRC org
---------------------------------------------------------------------------------
-Benchmark                         Time           CPU Iterations UserCounters...
---------------------------------------------------------------------------------
-fixture/BM_irate_product       1299 ns       1299 ns     527913 test=-251.067
-fixture/BM_loop                1331 ns       1331 ns     525534 test=-251.067
+-----------------------------------------------------------------------------------
+Benchmark                            Time           CPU Iterations UserCounters...
+-----------------------------------------------------------------------------------
+fixture/BM_irate_product          1807 ns       1806 ns     386622 test=-251.067
+fixture/BM_range_v3_product       1827 ns       1826 ns     384758 test=-251.067
+fixture/BM_loop                   1844 ns       1844 ns     379563 test=-251.067
 #+END_SRC

@@ -3,6 +3,7 @@
 
 #include <benchmark/benchmark.h>
 #include <irate/product.hpp>
+#include <range/v3/view/cartesian_product.hpp>
 
 struct fixture : benchmark::Fixture
 {
@@ -31,6 +32,21 @@ BENCHMARK_F(fixture, BM_irate_product)(benchmark::State& state)
     {
         sum = 0.0;
         for (auto [x, y] : irate::product(dvec, fvec))
+        {
+            sum += x + y;
+            benchmark::DoNotOptimize(sum);
+        }
+    }
+    state.counters["test"] = sum;
+}
+
+BENCHMARK_F(fixture, BM_range_v3_product)(benchmark::State& state)
+{
+    double sum = 0.0;
+    for (auto _ : state)
+    {
+        sum = 0.0;
+        for (auto [x, y] : ranges::view::cartesian_product(dvec, fvec))
         {
             sum += x + y;
             benchmark::DoNotOptimize(sum);

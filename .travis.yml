@@ -1,15 +1,33 @@
 sudo: false
 language: cpp
-compiler:
-  - gcc
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-8
+dist: xenial
+
+matrix:
+  include:
+  - os: linux
+    compiler: clang
+    env:
+      -COMPILER=clang++-7.0
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+          - llvm-toolchain-xenial-7
+        packages:
+          - clang-7.0
+  - os: linux
+    compiler: gcc
+    env:
+      -COMPILER=g++-8
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - g++-8
+
 script:
   - mkdir build && cd build
-  - cmake -DCMAKE_CXX_COMPILER=g++-8 -DIRATE_TEST=ON ..
+  - cmake -DIRATE_TEST=ON -DCMAKE_CXX_COMPILER=${COMPILER} ..
   - cmake --build .
   - ctest --output-on-failure

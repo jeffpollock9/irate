@@ -1,3 +1,5 @@
+[[https://travis-ci.com/jeffpollock9/irate][https://travis-ci.com/jeffpollock9/irate.svg?branch=master]]
+
 #+TITLE: irate
 #+AUTHOR: Jeff Pollock
 #+DESCRIPTION: A C++17 library for iterating over C++ containers

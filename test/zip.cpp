@@ -30,7 +30,7 @@ TEST_CASE("zip two vectors, modify one", "[zip]")
     const std::vector vec1{1.0, 200.0, 3.0, 4.0, 42.0, 100.0, 42.0};
     std::vector<double> vec2(vec1.size());
 
-    for (auto&& [v1, v2] : zip(vec1, vec2))
+    for (auto [v1, v2] : zip(vec1, vec2))
     {
         v2 = v1;
     }

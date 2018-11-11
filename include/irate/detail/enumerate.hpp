@@ -26,7 +26,7 @@ struct enumerate_iterator
         ++index_;
     }
 
-    constexpr bool operator!=(const Iterator& rhs) const
+    constexpr bool operator!=(const Iterator rhs) const
     {
         return iterator_ != rhs;
     }

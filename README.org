@@ -32,7 +32,7 @@ stop upon reaching the end of the shortest container:
 
       for (auto [v, l] : irate::zip(vec, lst))
       {
-          std::cout << "[" << v << ", " << l << "]\n";
+          std::cout << v << ", " << l << "\n";
       }
 
       return 0;
@@ -40,11 +40,11 @@ stop upon reaching the end of the shortest container:
 #+END_SRC
 
 #+RESULTS:
-| [1  | i] |
-| [20 | r] |
-| [3  | a] |
-| [4  | t] |
-| [42 | e] |
+|  1 | i |
+| 20 | r |
+|  3 | a |
+|  4 | t |
+| 42 | e |
 
 ** enumerate
 
@@ -63,7 +63,7 @@ Iterate over a single container along with an index which may start at any value
 
       for (auto [ix, val] : irate::enumerate(vec, 10))
       {
-          std::cout << "[" << ix << ", " << val << "]\n";
+          std::cout << ix << ", " << val << "\n";
       }
 
       return 0;
@@ -71,9 +71,9 @@ Iterate over a single container along with an index which may start at any value
 #+END_SRC
 
 #+RESULTS:
-| [10 | 42]   |
-| [11 | 666]  |
-| [12 | 3.14] |
+| 10 |   42 |
+| 11 |  666 |
+| 12 | 3.14 |
 
 ** range
 
@@ -120,7 +120,7 @@ Cartesian product of iterables:
 
       for (auto [v, l] : irate::product(vec, lst))
       {
-          std::cout << "[" << v << ", " << l << "]\n";
+          std::cout << v << ", " << l << "\n";
       }
 
       return 0;
@@ -128,12 +128,12 @@ Cartesian product of iterables:
 #+END_SRC
 
 #+RESULTS:
-| [-10 | foo] |
-| [-10 | bar] |
-| [10  | foo] |
-| [10  | bar] |
-| [100 | foo] |
-| [100 | bar] |
+| -10 | foo |
+| -10 | bar |
+|  10 | foo |
+|  10 | bar |
+| 100 | foo |
+| 100 | bar |
 
 * testing
 

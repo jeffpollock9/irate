@@ -4,6 +4,8 @@
 
 A C++17 library for iterating over C++ containers.
 
+#+TOC: headlines 2
+
 * why?
 
 this project is mainly for learning purposes - if you need this sort of

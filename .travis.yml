@@ -1,0 +1,15 @@
+sudo: false
+language: cpp
+compiler:
+  - gcc
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-8
+script:
+  - mkdir build && cd build
+  - cmake -DCMAKE_CXX_COMPILER=g++-8 -DIRATE_TEST=ON ..
+  - cmake --build .
+  - ctest --output-on-failure

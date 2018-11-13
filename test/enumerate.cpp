@@ -47,12 +47,23 @@ TEST_CASE("enumerate with non-zero index", "[enumerate]")
     std::list lst{1, 2, 3, 4};
     int step = -42;
 
-    using my_enumerate = enumerate<decltype(lst), decltype(step)>;
-
-    for (auto [ix, val] : my_enumerate(lst, step))
+    for (auto [ix, val] : enumerate(lst, step))
     {
         REQUIRE(ix == step++);
     }
 
     REQUIRE(step == -38);
+}
+
+TEST_CASE("enumerate with editing index", "[enumerate]")
+{
+    std::vector vec{1, 2, 3, 4};
+    int step = 0;
+
+    for (auto [ix, val] : enumerate(vec))
+    {
+        REQUIRE(ix == step);
+        REQUIRE(val == vec[step++]);
+        ix = -1;
+    }
 }

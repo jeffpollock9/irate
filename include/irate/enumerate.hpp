@@ -9,7 +9,8 @@
 namespace irate
 {
 
-template <typename Container, typename Index = int>
+template <typename Container,
+          typename Index = typename Container::difference_type>
 struct enumerate
 {
     constexpr explicit enumerate(Container& container, const Index start = 0)
@@ -33,7 +34,9 @@ private:
                            typename Container::iterator>;
 
     using enumerate_iterator =
-        detail::enumerate_iterator<container_iterator, Index>;
+        detail::enumerate_iterator<std::is_const_v<Container>,
+                                   container_iterator,
+                                   Index>;
 
     enumerate_iterator begin_;
     container_iterator end_;

@@ -2,7 +2,8 @@
 #include <random>
 
 #include <benchmark/benchmark.h>
-#include <irate/zip.hpp>
+#include <irate/enumerate.hpp>
+#include <range/v3/view/indices.hpp>
 #include <range/v3/view/zip.hpp>
 
 struct fixture : benchmark::Fixture
@@ -12,21 +13,13 @@ struct fixture : benchmark::Fixture
         std::mt19937 rng(666);
 
         std::normal_distribution dnorm(0.0, 1.0);
-        std::uniform_int_distribution iunif(-10, 10);
-        std::normal_distribution fnorm(0.0f, 1.0f);
 
         dvec.resize(17);
-        ivec.resize(42);
-        fvec.resize(56);
 
         std::generate(dvec.begin(), dvec.end(), [&] { return dnorm(rng); });
-        std::generate(ivec.begin(), ivec.end(), [&] { return iunif(rng); });
-        std::generate(fvec.begin(), fvec.end(), [&] { return fnorm(rng); });
     }
 
     std::vector<double> dvec;
-    std::vector<int> ivec;
-    std::vector<float> fvec;
 };
 
 BENCHMARK_F(fixture, BM_irate)(benchmark::State& state)
@@ -35,9 +28,9 @@ BENCHMARK_F(fixture, BM_irate)(benchmark::State& state)
     for (auto _ : state)
     {
         sum = 0.0;
-        for (auto [x, y, z] : irate::zip(dvec, ivec, fvec))
+        for (auto [i, x] : irate::enumerate(dvec))
         {
-            sum += x + y + z;
+            sum += i * x;
             benchmark::DoNotOptimize(sum);
         }
     }
@@ -50,9 +43,9 @@ BENCHMARK_F(fixture, BM_range_v3)(benchmark::State& state)
     for (auto _ : state)
     {
         sum = 0.0;
-        for (auto [x, y, z] : ranges::view::zip(dvec, ivec, fvec))
+        for (auto [i, x] : ranges::view::zip(ranges::view::indices, dvec))
         {
-            sum += x + y + z;
+            sum += i * x;
             benchmark::DoNotOptimize(sum);
         }
     }
@@ -64,16 +57,14 @@ BENCHMARK_F(fixture, BM_loop)(benchmark::State& state)
     double sum = 0.0;
     for (auto _ : state)
     {
-        const std::size_t n = std::min({dvec.size(), ivec.size(), fvec.size()});
+        const std::size_t n = dvec.size();
 
         sum = 0.0;
         for (std::size_t i = 0; i < n; ++i)
         {
             const auto x = dvec[i];
-            const auto y = ivec[i];
-            const auto z = fvec[i];
 
-            sum += x + y + z;
+            sum += i * x;
             benchmark::DoNotOptimize(sum);
         }
     }

@@ -3,7 +3,7 @@ include(add_basic_warnings)
 find_package(benchmark CONFIG REQUIRED)
 find_package(range-v3 CONFIG REQUIRED)
 
-set(IRATE_BENCHMARKS zip product)
+set(IRATE_BENCHMARKS zip product enumerate range)
 
 foreach(benchmark ${IRATE_BENCHMARKS})
     set(name "${benchmark}_benchmark")

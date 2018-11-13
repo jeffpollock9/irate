@@ -32,7 +32,7 @@ stop upon reaching the end of the shortest container:
 
   int main()
   {
-      std::vector vec{1.0, 20.0, 3.0, 4.0, 42.0, 100.0, 42.0};
+      const std::vector vec{1.0, 20.0, 3.0, 4.0, 42.0, 100.0, 42.0};
       const std::list lst{'i', 'r', 'a', 't', 'e'};
 
       for (auto [v, l] : irate::zip(vec, lst))
@@ -169,12 +169,12 @@ the benchmark results are:
 
 #+RESULTS:
 #+BEGIN_SRC org
--------------------------------------------------------------------------------
-Benchmark                        Time           CPU Iterations UserCounters...
--------------------------------------------------------------------------------
-fixture/BM_irate_zip            39 ns         39 ns   13830810 test=5.67854
-fixture/BM_range_v3_zip         47 ns         47 ns   14869365 test=5.67854
-fixture/BM_loop                 40 ns         40 ns   17686838 test=5.67854
+---------------------------------------------------------------------------
+Benchmark                    Time           CPU Iterations UserCounters...
+---------------------------------------------------------------------------
+fixture/BM_irate            43 ns         43 ns   13168336 test=5.67854
+fixture/BM_range_v3         40 ns         40 ns   17528121 test=5.67854
+fixture/BM_loop             40 ns         40 ns   17669288 test=5.67854
 #+END_SRC
 
 #+BEGIN_SRC shell :exports both :results org
@@ -183,10 +183,38 @@ fixture/BM_loop                 40 ns         40 ns   17686838 test=5.67854
 
 #+RESULTS:
 #+BEGIN_SRC org
------------------------------------------------------------------------------------
-Benchmark                            Time           CPU Iterations UserCounters...
------------------------------------------------------------------------------------
-fixture/BM_irate_product          1807 ns       1806 ns     386622 test=-251.067
-fixture/BM_range_v3_product       1827 ns       1826 ns     384758 test=-251.067
-fixture/BM_loop                   1844 ns       1844 ns     379563 test=-251.067
+---------------------------------------------------------------------------
+Benchmark                    Time           CPU Iterations UserCounters...
+---------------------------------------------------------------------------
+fixture/BM_irate          1313 ns       1313 ns     529151 test=-251.067
+fixture/BM_range_v3       1297 ns       1297 ns     534578 test=-251.067
+fixture/BM_loop           1333 ns       1333 ns     525838 test=-251.067
+#+END_SRC
+
+#+BEGIN_SRC shell :exports both :results org
+  ~/workspace/irate/release/benchmark/enumerate_benchmark --benchmark_color=false
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC org
+---------------------------------------------------------------------------
+Benchmark                    Time           CPU Iterations UserCounters...
+---------------------------------------------------------------------------
+fixture/BM_irate            38 ns         38 ns   18619063 test=-48.0793
+fixture/BM_range_v3         38 ns         38 ns   18650543 test=-48.0793
+fixture/BM_loop             28 ns         28 ns   24786376 test=-48.0793
+#+END_SRC
+
+#+BEGIN_SRC shell :exports both :results org
+  ~/workspace/irate/release/benchmark/range_benchmark --benchmark_color=false
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC org
+---------------------------------------------------------------------------
+Benchmark                    Time           CPU Iterations UserCounters...
+---------------------------------------------------------------------------
+fixture/BM_irate           254 ns        254 ns    2695342 test=4.95k
+fixture/BM_range_v3        253 ns        253 ns    2760855 test=4.95k
+fixture/BM_loop            254 ns        254 ns    2756940 test=4.95k
 #+END_SRC

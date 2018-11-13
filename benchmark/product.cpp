@@ -25,7 +25,7 @@ struct fixture : benchmark::Fixture
     std::vector<float> fvec;
 };
 
-BENCHMARK_F(fixture, BM_irate_product)(benchmark::State& state)
+BENCHMARK_F(fixture, BM_irate)(benchmark::State& state)
 {
     double sum = 0.0;
     for (auto _ : state)
@@ -40,7 +40,7 @@ BENCHMARK_F(fixture, BM_irate_product)(benchmark::State& state)
     state.counters["test"] = sum;
 }
 
-BENCHMARK_F(fixture, BM_range_v3_product)(benchmark::State& state)
+BENCHMARK_F(fixture, BM_range_v3)(benchmark::State& state)
 {
     double sum = 0.0;
     for (auto _ : state)

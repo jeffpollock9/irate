@@ -8,7 +8,7 @@
 
 struct fixture : benchmark::Fixture
 {
-    virtual void SetUp(benchmark::State& /*state*/) override
+    void SetUp(benchmark::State& /*state*/) override
     {
         std::mt19937 rng(666);
 

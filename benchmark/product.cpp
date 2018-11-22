@@ -60,17 +60,11 @@ BENCHMARK_F(fixture, BM_loop)(benchmark::State& state)
     double sum = 0.0;
     for (auto _ : state)
     {
-        const std::size_t n = dvec.size();
-        const std::size_t m = fvec.size();
-
         sum = 0.0;
-        for (std::size_t i = 0; i < n; ++i)
+        for (auto x : dvec)
         {
-            for (std::size_t j = 0; j < m; ++j)
+            for (auto y : fvec)
             {
-                const auto x = dvec[i];
-                const auto y = fvec[j];
-
                 sum += x + y;
                 benchmark::DoNotOptimize(sum);
             }

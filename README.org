@@ -172,9 +172,9 @@ the benchmark results are:
 ---------------------------------------------------------------------------
 Benchmark                    Time           CPU Iterations UserCounters...
 ---------------------------------------------------------------------------
-fixture/BM_irate            43 ns         43 ns   13168336 test=5.67854
-fixture/BM_range_v3         40 ns         40 ns   17528121 test=5.67854
-fixture/BM_loop             40 ns         40 ns   17669288 test=5.67854
+fixture/BM_irate            39 ns         39 ns   17974556 test=5.67854
+fixture/BM_range_v3         40 ns         40 ns   17326655 test=5.67854
+fixture/BM_loop             40 ns         40 ns   17421502 test=5.67854
 #+END_SRC
 
 #+BEGIN_SRC shell :exports both :results org
@@ -186,9 +186,9 @@ fixture/BM_loop             40 ns         40 ns   17669288 test=5.67854
 ---------------------------------------------------------------------------
 Benchmark                    Time           CPU Iterations UserCounters...
 ---------------------------------------------------------------------------
-fixture/BM_irate          1313 ns       1313 ns     529151 test=-251.067
-fixture/BM_range_v3       1297 ns       1297 ns     534578 test=-251.067
-fixture/BM_loop           1333 ns       1333 ns     525838 test=-251.067
+fixture/BM_irate          1302 ns       1302 ns     522892 test=-251.067
+fixture/BM_range_v3       1310 ns       1310 ns     536559 test=-251.067
+fixture/BM_loop           1335 ns       1335 ns     515426 test=-251.067
 #+END_SRC
 
 #+BEGIN_SRC shell :exports both :results org
@@ -200,9 +200,9 @@ fixture/BM_loop           1333 ns       1333 ns     525838 test=-251.067
 ---------------------------------------------------------------------------
 Benchmark                    Time           CPU Iterations UserCounters...
 ---------------------------------------------------------------------------
-fixture/BM_irate            38 ns         38 ns   18619063 test=-48.0793
-fixture/BM_range_v3         38 ns         38 ns   18650543 test=-48.0793
-fixture/BM_loop             28 ns         28 ns   24786376 test=-48.0793
+fixture/BM_irate            38 ns         38 ns   13361628 test=-48.0793
+fixture/BM_range_v3         38 ns         38 ns   18533648 test=-48.0793
+fixture/BM_loop             28 ns         28 ns   24792976 test=-48.0793
 #+END_SRC
 
 #+BEGIN_SRC shell :exports both :results org
@@ -214,7 +214,7 @@ fixture/BM_loop             28 ns         28 ns   24786376 test=-48.0793
 ---------------------------------------------------------------------------
 Benchmark                    Time           CPU Iterations UserCounters...
 ---------------------------------------------------------------------------
-fixture/BM_irate           254 ns        254 ns    2695342 test=4.95k
-fixture/BM_range_v3        253 ns        253 ns    2760855 test=4.95k
-fixture/BM_loop            254 ns        254 ns    2756940 test=4.95k
+fixture/BM_irate           251 ns        251 ns    2766288 test=4.95k
+fixture/BM_range_v3        253 ns        253 ns    2761372 test=4.95k
+fixture/BM_loop            254 ns        254 ns    2760285 test=4.95k
 #+END_SRC

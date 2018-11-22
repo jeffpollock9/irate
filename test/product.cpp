@@ -19,11 +19,11 @@ TEST_CASE("product array, const vector, different sizes", "[product]")
     }
 
     double loop_ans = 0.0;
-    for (std::size_t i = 0; i < arr.size(); ++i)
+    for (auto a : arr)
     {
-        for (std::size_t j = 0; j < vec.size(); ++j)
+        for (auto v : vec)
         {
-            loop_ans += arr[i] * vec[j];
+            loop_ans += a * v;
         }
     }
 

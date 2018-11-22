@@ -1,6 +1,8 @@
 #ifndef IRATE_DETAIL_PRODUCT_HPP_
 #define IRATE_DETAIL_PRODUCT_HPP_
 
+#include <irate/detail/dereference.hpp>
+
 #include <iterator>
 #include <tuple>
 #include <type_traits>

@@ -1,7 +1,6 @@
 #ifndef IRATE_PRODUCT_HPP_
 #define IRATE_PRODUCT_HPP_
 
-#include <irate/detail/dereference.hpp>
 #include <irate/detail/product.hpp>
 
 #include <iterator>

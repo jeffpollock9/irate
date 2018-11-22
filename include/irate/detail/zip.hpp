@@ -1,6 +1,8 @@
 #ifndef IRATE_DETAIL_ZIP_HPP_
 #define IRATE_DETAIL_ZIP_HPP_
 
+#include <irate/detail/dereference.hpp>
+
 #include <tuple>
 #include <type_traits>
 #include <utility>

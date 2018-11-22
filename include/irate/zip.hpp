@@ -1,7 +1,6 @@
 #ifndef IRATE_ZIP_HPP_
 #define IRATE_ZIP_HPP_
 
-#include <irate/detail/dereference.hpp>
 #include <irate/detail/zip.hpp>
 
 #include <iterator>

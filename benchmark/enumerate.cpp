@@ -3,8 +3,7 @@
 
 #include <benchmark/benchmark.h>
 #include <irate/enumerate.hpp>
-#include <range/v3/view/indices.hpp>
-#include <range/v3/view/zip.hpp>
+#include <range/v3/view/enumerate.hpp>
 
 struct fixture : benchmark::Fixture
 {
@@ -43,7 +42,7 @@ BENCHMARK_F(fixture, BM_range_v3)(benchmark::State& state)
     for (auto _ : state)
     {
         sum = 0.0;
-        for (auto [i, x] : ranges::view::zip(ranges::view::indices, dvec))
+        for (auto [i, x] : ranges::view::enumerate(dvec))
         {
             sum += i * x;
             benchmark::DoNotOptimize(sum);

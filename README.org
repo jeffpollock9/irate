@@ -200,9 +200,9 @@ fixture/BM_loop           1335 ns       1335 ns     515426 test=-251.067
 ---------------------------------------------------------------------------
 Benchmark                    Time           CPU Iterations UserCounters...
 ---------------------------------------------------------------------------
-fixture/BM_irate            38 ns         38 ns   13361628 test=-48.0793
-fixture/BM_range_v3         38 ns         38 ns   18533648 test=-48.0793
-fixture/BM_loop             28 ns         28 ns   24792976 test=-48.0793
+fixture/BM_irate            39 ns         39 ns   18355584 test=-48.0793
+fixture/BM_range_v3         39 ns         39 ns   18061843 test=-48.0793
+fixture/BM_loop             29 ns         29 ns   23787363 test=-48.0793
 #+END_SRC
 
 #+BEGIN_SRC shell :exports both :results org
